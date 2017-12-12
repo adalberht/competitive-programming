@@ -11,7 +11,6 @@ typedef vector<int> vi;
 typedef vector<vi> vvi;
 typedef vector<pii> vii;
 
-#define newline '\n';
 #define pb push_back
 #define mp make_pair
 #define fi first
@@ -21,6 +20,26 @@ typedef vector<pii> vii;
 const int PI = acos(-1.0);
 const int MOD = 1e9 + 7;
 
+
+vector<int> arr;
+int N;
+
 int main() {
-	return 0;
+  FAST_IO;
+
+  cin >> N;
+  arr.resize(N+5);
+  for (int i = 0; i < N; ++i) {
+    cin >> arr[i];
+  }
+
+  int count = 0;
+  for (int i = 1; i < N - 1; ++i) {
+    if (arr[i] > arr[i-1] && arr[i] > arr[i+1]) ++count;
+    else if (arr[i] < arr[i-1] && arr[i] < arr[i+1]) ++count;
+  }
+
+  cout << count << '\n';
+
+  return 0;
 }

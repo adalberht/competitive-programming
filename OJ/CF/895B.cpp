@@ -11,7 +11,6 @@ typedef vector<int> vi;
 typedef vector<vi> vvi;
 typedef vector<pii> vii;
 
-#define newline '\n';
 #define pb push_back
 #define mp make_pair
 #define fi first
