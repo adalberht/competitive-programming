@@ -49,8 +49,9 @@ int main() {
 	
 	int tc = 1;
 	// cin >> tc;
-	while (tc--) {
+	REP(_i, tc) {
 		read();
+		// cout << "Case #" << _i + 1 << ":";
 		solve();
 	}
 
