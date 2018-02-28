@@ -34,8 +34,6 @@ const int PI = acos(-1.0);
 const int MOD = 1e9 + 7;
 const int INF = 2e9;
 
-const int MAX = 18;
-
 ll K;
 
 string s;
@@ -47,24 +45,24 @@ void read() {
 }
 
 bool isPangkatDua(ll k) {
-	if (k == 1) return true;
-	while (k > 1) {
-		if (k % 2 != 0) return false;
-		k /= 2;
+	if (k == 1LL) return true;
+	while (k > 1LL) {
+		if (k % 2LL != 0) return false;
+		k /= 2LL;
 	}
 	return true;
 }
 
 ll pangkatDuaTerdekat(ll k) {
-	FORD(i, 63, 0) {
-		if ((1 << i & k) != 0) {
-			return (1 << i);
+	FORD(i, 63L, 0LL) {
+		if (((1LL << i) & k) != 0LL) {
+			return (1LL << i);
 		}
 	}
 }
 
 bool query(ll K) {
-  if (K == 1) {
+  if (K == 1LL) {
 		return 0;
 	}
 	if (memo.count(K)) {
@@ -74,7 +72,6 @@ bool query(ll K) {
 		return 0;
 	}
 	ll d = pangkatDuaTerdekat(K);
-	// cout << "Pangkat dua terdekat dari: " << K << " " << d << endl;
 	bool &ret = memo[K];
 	return ret = !query(d - (K - d));
 }
