@@ -11,6 +11,6 @@ Even though I'm a "noob" competitive programmer, I realize that through competit
 
 ### Competitive Programming Handles
 I'm a noob coder, but if you are looking for friends, feel free to add me!
-- **Codeforces**: *adelbert*
+- **Codeforces**: *adalberht*
 - **UVa** : *adalberht*
 - **HackerRank** : *adalberht*
