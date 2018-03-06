@@ -1,3 +1,20 @@
+/*
+Albertus Angga Raharja (adalberht)
+1606918401
+
+Problem A - Chef and Friends
+
+This problem is asking whether a given graph can be split into two complete graphs that are connected.
+Thinking reversely, if a graph is a complete graph, it's complement graph (graph with edges that are not the member of the original graph) must be empty.
+So if a graph can be configured to be two connected complete graphs, the complement graph, the left side of the complete graph must be disjoint graph, and the right one must be disjoint too.
+So to check whether it's possible to configure the graph to such way,
+We need to check the middle part of the complement of the graph, whether it's a bipartite graph or not.
+
+Solved by using bipartite check algorithm..
+My first and second attempt are wrong because of a wrong and buggy implementation of the bipartite check.
+
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;

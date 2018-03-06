@@ -1,5 +1,18 @@
-// Credits:
-// Hopcroft Karp Implementation here is the same as Ahmad Hasan Siregar's implementation (Reuse)
+/*
+Albertus Angga Raharja (adalberht)
+1606918401
+
+
+Problem D - Fast Maximum Matching
+
+This problem is a classical Maximum Cardinality Bipartite Matching (MCBM) problem.
+It can be reduced to bipartite graph, where the left set of the graph is set of cows, and the right set of the graph is a set of bulls.
+We can generate the MCBM by using alternating path.
+Solved this problem using Hopcraft-Karp.
+
+Credits:
+Hopcroft-Karp implementation here is similar to Ahmad Hasan Siregar's implementation
+*/
 
 #include <bits/stdc++.h>
 

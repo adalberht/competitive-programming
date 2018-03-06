@@ -21,6 +21,7 @@ void FAST_IO() {
 #define se second
 #define newline '\n';
 
+typedef unsigned long long ull;
 typedef long long ll;
 typedef pair<int, int> ii;
 typedef pair<int, int> pii;
@@ -54,13 +55,13 @@ void read() {
 	}
 	vi new_arr;
 	new_arr.pb(-1);
-	FOR (i, 1, N) {
-		FOR (j, i, N) {
+	FOR(i, 1, N) {
+		FOR(j, i, N) {
 			new_arr.pb(orig_pref[j] - orig_pref[i-1]);
 		}
 	}
-	sort (new_arr.begin(), new_arr.end());
-	FOR (i, 1, new_arr.size() - 1) {
+	sort(ALL(new_arr));
+	FOR(i, 1, new_arr.size() - 1) {
 		new_pref[i] = new_pref[i-1] + new_arr[i];
 	}
 

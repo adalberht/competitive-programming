@@ -1,5 +1,26 @@
-// Credits:
-// Hopcroft Karp Implementation here is the same as Ahmad Hasan Siregar's implementation (Reuse)
+/*
+Albertus Angga Raharja (adalberht)
+1606918401
+
+Problem E - Air Raid
+
+This problem can be solved by using Maximum Path Cover algorithm.
+If we know that MCBM answer is x,
+Maximum Path Cover is N - x.
+
+Since Minimum Path Cover can be reduced to MCBM problem, and MCBM problem can be solved using Max Flow problem,
+My first attempt at this problem was the implementation of Max Flow using Edmond-Karp's algorithm,
+We can solve this using Max Flow by:
+- Adding edges from "dummy" source to every single node in left set,
+and
+- Adding edges from every node in the right set to "dummy" target.
+Unfortunately, Edmond-Karp's algorithm run at O(VE^2) so of course it will give a time limit.
+
+My second attempt is to revise the solution using better algorithm: Hopcroft Karp.
+
+Credits:
+Hopcroft Karp Implementation here is the same as Ahmad Hasan Siregar's implementation (Reuse)
+*/
 
 #include <bits/stdc++.h>
 
