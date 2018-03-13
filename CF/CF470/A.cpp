@@ -44,35 +44,34 @@ int R, C;
 vii wolves;
 vii sheeps;
 
-bool is_valid_grid(int r, int c) {
+bool isValidGrid(int r, int c) {
 	if (r < 0 || c < 0 || r >= R || c >= C) return false;
-	return grid[r][c] == 'D';
-}
-
-void dfs(int r, int c) {
-	visited[r][c] = true;
-	if (is_valid_grid(r+1, c) && !visited[r+1][c]) dfs(r+1, c);
-	if (is_valid_grid(r, c+1) && !visited[r][c+1]) dfs(r, c+1);
-	if (is_valid_grid(r-1, c) && !visited[r-1][c]) dfs(r-1, c);
-	if (is_valid_grid(r, c-1) && !visited[r][c-1]) dfs(r, c-1);
+	return true;
 }
 
 void solve() {
-	for (auto wolf: wolves) {
-		int r = wolf.fi;
-		int c = wolf.se;
-		if (!visited[r][c]) dfs(r, c);
-	}
-	bool exist = true;
+	bool exist = false;
 	for (auto sheep: sheeps) {
 		int r = sheep.fi;
 		int c = sheep.se;
-		if (visited[r][c]) {
-			exist = false;
+		if (isValidGrid(r+1, c) && grid[r+1][c] == 'W') {
+			exist = true;
+			break;
+		}
+		if (isValidGrid(r-1, c) && grid[r-1][c] == 'W') {
+			exist = true;
+			break;
+		}
+		if (isValidGrid(r, c+1) && grid[r][c+1] == 'W') {
+			exist = true;
+			break;
+		}
+		if (isValidGrid(r, c-1) && grid[r][c-1] == 'W') {
+			exist = true;
 			break;
 		}
 	}
-	if (!exist) {
+	if (exist) {
 		cout << "No\n";
 	} else {
 		cout << "Yes\n";
