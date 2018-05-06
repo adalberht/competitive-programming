@@ -1,3 +1,14 @@
+/*
+Albertus Angga Raharja (adalberht)
+1606918401
+
+Problem G - Wide Flip
+Tags: Greedy
+
+
+
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -21,14 +32,6 @@ void FAST_IO() {
 #define se second
 #define newline '\n';
 
-// DEBUG UTIL
-#define DEBUG(args...) { cerr << "> "; \
-						 string _s = #args; \
-						 replace(_s.begin(), _s.end(), ',', ' '); \
-						 stringstream _ss(_s); istream_iterator<string> _it(_ss); \
-						 err(_it, args); }
-
-
 typedef long long ll;
 typedef pair<int, int> ii;
 typedef pair<int, int> pii;
@@ -42,35 +45,28 @@ const double PI = acos(-1.0);
 const int MOD = 1e9 + 7;
 const int INF = 2e9;
 
-const int MAX_N = 1e3 + 5;
+const int MAX_N = 1e5 + 5;
+
+int suffix_count[MAX_N + 5];
 
 string s;
+int n;
 
 int main() {
 	FAST_IO();
 	
 	cin >> s;
-	int len = s.length();
-	int first_a_occurence = s.find("a");
+	n = s.length();
+	
+	int ans = n;
 
-	if (first_a_occurence == -1) {
-		cout << -1 << endl;
-		return 0;
-	}
-
-	int last_character = 0;
-	FOR(i, first_a_occurence+1, len-1) {
-		if (last_character < 25 && s[i] <= 'a' + last_character + 1) {
-			s[i] = (char)('a' + ++last_character);
+	REP(i, n-1) {
+		if (s[i] != s[i+1]) {
+			ans = min(ans, max(n - i - 1, i + 1));
 		}
 	}
 
-	// cout << last_character << endl;
-	// cout << s << endl;
-
-	if (last_character != 25) s = "-1";
-
-	cout << s << endl;
+	cout << ans << endl;
 
 	return 0;
 }

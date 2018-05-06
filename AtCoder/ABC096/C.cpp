@@ -2,12 +2,9 @@
 
 using namespace std;
 
-void FAST_IO() {
-	ios_base::sync_with_stdio(false);
-	cin.tie(0);
-	cout.tie(0);
-}
-
+#define FAST_IO ios_base::sync_with_stdio(false);\
+				cin.tie(0);\
+				cout.tie(0)
 #define REP(_i, _a) for(int _i = 0; _i < (int)_a; ++_i)
 #define FOR(_i, _a, _b) for(int _i = (int)_a; _i <= (int)_b; ++_i)
 #define FORD(_i, _a, _b) for(int _i = (int)_a; _i >= (int)_b; --_i)
@@ -48,16 +45,64 @@ const double PI = acos(-1.0);
 const int MOD = 1e9 + 7;
 const int INF = 2e9;
 
-void read() {
+const int MAX_N = 50;
 
+int H, W;
+
+bool visited[MAX_N+5][MAX_N+5];
+char grid[MAX_N+5][MAX_N+5];
+
+void test() {
+
+}
+
+void read() {
+	cin >> H >> W;
+	REP(i, H) {
+		cin >> grid[i];
+	}
+}
+
+void dfs(int i, int j) {
+	visited[i][j] = true;
+	if (j+1 < W && grid[i][j+1] == '#' && !visited[i][j+1]) dfs(i, j+1);
+	if (j-1 >= 0 && grid[i][j-1] == '#' && !visited[i][j-1]) dfs(i, j-1);
+	if (i+1 < H && grid[i+1][j] == '#' && !visited[i+1][j]) dfs(i+1, j);
+	if (i-1 >= 0 && grid[i-1][j] == '#' && !visited[i-1][j]) dfs(i-1, j);
 }
 
 void solve() {
-	
+	REP(i, H) {
+		REP(j, W-1) {
+			if (grid[i][j] == '#' && grid[i][j+1] == '#' && !visited[i][j]) {
+				dfs(i, j);
+			}
+		}
+	}
+
+	REP(i, H-1) {
+		REP(j, W) {
+			if (grid[i][j] == '#' && grid[i+1][j] == '#' && !visited[i][j]) {
+				dfs(i, j);
+			}
+		}
+	}
+
+	REP(i, H) {
+		REP(j, W) {
+			if (grid[i][j] == '#' && !visited[i][j]) {
+				cout << "No\n";
+				return;
+			}
+		}
+	}
+	cout << "Yes\n";
 }
 
 int main() {
-	FAST_IO();
+	FAST_IO;
+	
+	test();
 
 	int TC = 1;
 	// cin >> TC;

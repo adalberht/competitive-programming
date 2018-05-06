@@ -1,3 +1,26 @@
+/*
+Albertus Angga Raharja (adalberht)
+1606918401
+
+Problem B - Androids
+
+Tags: Greedy, MST
+
+This is a classical MST problem.
+But since the given graph is a complete graph, there are N*(N-1)/2 edges,
+N*(N-1)/2 edges are far too big for N = 1e5,
+
+Using Prim's algorithm,
+For every node we visit, we want to add minimum edges to it,
+So we can actually just generate 3 minimum edges (minimum according to X, Y, Z) * 2 directional (6 edges) to node which is not included in the MST yet.
+
+Issues:
+- -2 attempt because of linear search, solved by using lower_bound() while generating the minimum edges.
+
+Solved by using Prim's algorithm.
+
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;

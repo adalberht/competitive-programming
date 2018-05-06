@@ -21,14 +21,6 @@ void FAST_IO() {
 #define se second
 #define newline '\n';
 
-// DEBUG UTIL
-#define DEBUG(args...) { cerr << "> "; \
-						 string _s = #args; \
-						 replace(_s.begin(), _s.end(), ',', ' '); \
-						 stringstream _ss(_s); istream_iterator<string> _it(_ss); \
-						 err(_it, args); }
-
-
 typedef long long ll;
 typedef pair<int, int> ii;
 typedef pair<int, int> pii;
@@ -42,35 +34,52 @@ const double PI = acos(-1.0);
 const int MOD = 1e9 + 7;
 const int INF = 2e9;
 
-const int MAX_N = 1e3 + 5;
+const int MAX_N = 200000 + 5;
 
-string s;
+int n;
+int arr[MAX_N];
 
 int main() {
 	FAST_IO();
-	
-	cin >> s;
-	int len = s.length();
-	int first_a_occurence = s.find("a");
 
-	if (first_a_occurence == -1) {
-		cout << -1 << endl;
-		return 0;
+	int x = 0;
+	cin >> n;
+	REP(i, n) {
+		cin >> arr[i];
+		x = max(x, arr[i]);
 	}
 
-	int last_character = 0;
-	FOR(i, first_a_occurence+1, len-1) {
-		if (last_character < 25 && s[i] <= 'a' + last_character + 1) {
-			s[i] = (char)('a' + ++last_character);
+	int y = 1;
+	REP(i, n-1) {
+		int difference = abs(arr[i] - arr[i+1]);
+		if (difference > 1) {
+			y = difference;
+			break;
+		} else if (difference == 0) {
+			cout << "NO\n";
+			return 0;
+		}
+	}
+	FOR(i, 1, n - 1) {
+		int difference = arr[i-1] - arr[i];
+		if (difference < 0) difference = -difference;
+		if (difference == 1) {
+			if (y == 1) continue;
+			int maks = max(arr[i-1], arr[i]);
+			int minim = min(arr[i-1], arr[i]);
+			if ((minim % y) == 0 && (maks % y) == 1) {
+				cout << "NO\n";
+				return 0;
+			}
+		} else if (difference == 0 || difference != y) {
+			// cerr << arr[i] << " " << arr[i-1] << " " << y << endl;
+			cout << "NO\n";
+			return 0;
 		}
 	}
 
-	// cout << last_character << endl;
-	// cout << s << endl;
-
-	if (last_character != 25) s = "-1";
-
-	cout << s << endl;
+	cout << "YES\n";
+	cout << x << " " << y << endl;
 
 	return 0;
 }

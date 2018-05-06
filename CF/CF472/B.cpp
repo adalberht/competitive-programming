@@ -11,7 +11,7 @@ void FAST_IO() {
 #define REP(_i, _a) for(int _i = 0; _i < _a; ++_i)
 #define FOR(_i, _a, _b) for(int _i = _a; _i <= _b; ++_i)
 #define FORD(_i, _a, _b) for(int _i = _a; _i >= _b; --_i)
-#define RESET(_a, _value) memset(_a, _value, sizeof(_a))
+#define RESET(_a, _value) fill_n(_a,sizeof(_a)/sizeof(_a[0]),_v)
 #define ALL(_a) _a.begin(), _a.end()
 #define SIZE(_a) _a.size()
 #define pb push_back
@@ -28,6 +28,12 @@ void FAST_IO() {
 						 stringstream _ss(_s); istream_iterator<string> _it(_ss); \
 						 err(_it, args); }
 
+void err(istream_iterator<string> it) { cerr << endl; }
+template<typename T, typename... Args>
+void err(istream_iterator<string> it, T a, Args... args) {
+	cerr << *it << ": " << a << " ";
+	err(++it, args...);
+}
 
 typedef long long ll;
 typedef pair<int, int> ii;
@@ -40,37 +46,44 @@ typedef vector<ii> vii;
 
 const double PI = acos(-1.0);
 const int MOD = 1e9 + 7;
+const int MOD2 = 1e9 + 9;
 const int INF = 2e9;
 
-const int MAX_N = 1e3 + 5;
+const int MAX_N = 5e2 + 5;
 
-string s;
+int n, m;
+string s[55];
+ii hash_value[55];
 
 int main() {
 	FAST_IO();
 	
-	cin >> s;
-	int len = s.length();
-	int first_a_occurence = s.find("a");
-
-	if (first_a_occurence == -1) {
-		cout << -1 << endl;
-		return 0;
+	cin >> n >> m;
+	REP(i, n) {
+		cin >> s[i];
+		int hash1 = 0;
+		int hash2 = 0;
+		REP(j, m) {
+			hash1 = (s[i][j] + (ll)hash1 * 7) % MOD;
+			hash2 = (s[i][j] + (ll)hash2 * 11) % MOD2;
+		}
+		hash_value[i] = {hash1, hash2};
 	}
 
-	int last_character = 0;
-	FOR(i, first_a_occurence+1, len-1) {
-		if (last_character < 25 && s[i] <= 'a' + last_character + 1) {
-			s[i] = (char)('a' + ++last_character);
+	REP(c, m) {
+		set<ii> cnt;
+		cnt.clear();
+		REP(r, n) {
+			if (s[r][c] == '#') {
+				cnt.insert(hash_value[r]);
+			}
+		}
+		if (cnt.size() > 1) {
+			cout << "No\n";
+			return 0;
 		}
 	}
-
-	// cout << last_character << endl;
-	// cout << s << endl;
-
-	if (last_character != 25) s = "-1";
-
-	cout << s << endl;
+	cout << "Yes\n";
 
 	return 0;
 }

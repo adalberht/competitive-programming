@@ -2,12 +2,9 @@
 
 using namespace std;
 
-void FAST_IO() {
-	ios_base::sync_with_stdio(false);
-	cin.tie(0);
-	cout.tie(0);
-}
-
+#define FAST_IO ios_base::sync_with_stdio(false);\
+				cin.tie(0);\
+				cout.tie(0)
 #define REP(_i, _a) for(int _i = 0; _i < (int)_a; ++_i)
 #define FOR(_i, _a, _b) for(int _i = (int)_a; _i <= (int)_b; ++_i)
 #define FORD(_i, _a, _b) for(int _i = (int)_a; _i >= (int)_b; --_i)
@@ -48,16 +45,37 @@ const double PI = acos(-1.0);
 const int MOD = 1e9 + 7;
 const int INF = 2e9;
 
-void read() {
+int a, b;
 
+void test() {
+
+}
+
+void read() {
+	cin >> a >> b;
+	b = max(a-1, b);
+}
+
+void dfs(int i, int j) {
+	visited[i][j] = true;
+	if (j+1 < W && grid[i][j+1] == '#' && !visited[i][j+1]) dfs(i, j+1);
+	if (j-1 >= 0 && grid[i][j-1] == '#' && !visited[i][j-1]) dfs(i, j-1);
+	if (i+1 < H && grid[i+1][j] == '#' && !visited[i+1][j]) dfs(i+1, j);
+	if (i-1 >= 0 && grid[i-1][j] == '#' && !visited[i-1][j]) dfs(i-1, j);
 }
 
 void solve() {
-	
+	int ans = 0;
+	FOR(i, 1, a) {
+		if (i <= b) ++ans;
+	}
+	cout << ans << endl;
 }
 
 int main() {
-	FAST_IO();
+	FAST_IO;
+	
+	test();
 
 	int TC = 1;
 	// cin >> TC;

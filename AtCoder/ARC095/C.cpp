@@ -2,12 +2,9 @@
 
 using namespace std;
 
-void FAST_IO() {
-	ios_base::sync_with_stdio(false);
-	cin.tie(0);
-	cout.tie(0);
-}
-
+#define FAST_IO ios_base::sync_with_stdio(false);\
+				cin.tie(0);\
+				cout.tie(0)
 #define REP(_i, _a) for(int _i = 0; _i < (int)_a; ++_i)
 #define FOR(_i, _a, _b) for(int _i = (int)_a; _i <= (int)_b; ++_i)
 #define FORD(_i, _a, _b) for(int _i = (int)_a; _i >= (int)_b; --_i)
@@ -23,10 +20,10 @@ void FAST_IO() {
 
 // DEBUG UTIL
 #define DEBUG(args...) { cerr << "> "; \
-						 string _s = #args; \
-						 replace(_s.begin(), _s.end(), ',', ' '); \
-						 stringstream _ss(_s); istream_iterator<string> _it(_ss); \
-						 err(_it, args); }
+						string _s = #args; \
+						replace(_s.begin(), _s.end(), ',', ' '); \
+						stringstream _ss(_s); istream_iterator<string> _it(_ss); \
+						err(_it, args); }
 
 void err(istream_iterator<string> it) { cerr << endl; }
 template<typename T, typename... Args>
@@ -48,17 +45,43 @@ const double PI = acos(-1.0);
 const int MOD = 1e9 + 7;
 const int INF = 2e9;
 
-void read() {
+int n;
+multiset<int> now;
+vi arr;
+multiset<int>::iterator mid;
 
+void read() {
+	cin >> n;
+	arr.resize(n);
+	REP(i, n) {
+		cin >> arr[i];
+		now.insert(arr[i]);
+	}
+	mid = next(now.begin(), n / 2);
 }
 
 void solve() {
-	
+	vi ans;
+	--mid;
+	REP(i, n) {
+
+		if (arr[i] <= *mid) {
+			++mid;
+			ans.pb(*mid);
+			--mid;
+		} else {
+			ans.pb(*mid);
+		}
+	}
+
+	for (auto e: ans) {
+		cout << e << endl;
+	}	
 }
 
 int main() {
-	FAST_IO();
-
+	FAST_IO;
+	
 	int TC = 1;
 	// cin >> TC;
 	FOR(tc, 1, TC) {

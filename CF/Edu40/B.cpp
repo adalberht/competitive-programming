@@ -21,14 +21,6 @@ void FAST_IO() {
 #define se second
 #define newline '\n';
 
-// DEBUG UTIL
-#define DEBUG(args...) { cerr << "> "; \
-						 string _s = #args; \
-						 replace(_s.begin(), _s.end(), ',', ' '); \
-						 stringstream _ss(_s); istream_iterator<string> _it(_ss); \
-						 err(_it, args); }
-
-
 typedef long long ll;
 typedef pair<int, int> ii;
 typedef pair<int, int> pii;
@@ -44,33 +36,33 @@ const int INF = 2e9;
 
 const int MAX_N = 1e3 + 5;
 
+int n;
 string s;
 
 int main() {
 	FAST_IO();
 	
+	cin >> n;
 	cin >> s;
-	int len = s.length();
-	int first_a_occurence = s.find("a");
-
-	if (first_a_occurence == -1) {
-		cout << -1 << endl;
-		return 0;
+	if (n == 1) {
+		cout << 1 << endl;
+		exit(0);
 	}
-
-	int last_character = 0;
-	FOR(i, first_a_occurence+1, len-1) {
-		if (last_character < 25 && s[i] <= 'a' + last_character + 1) {
-			s[i] = (char)('a' + ++last_character);
+	int ans = 1e9;
+	FORD(i, n / 2, 0) {
+		int cur = i;
+		string repeat = s.substr(0, i);
+		string after = s.substr(i, i);
+		if (repeat == after) {
+			cur += 1;
+		} else {
+			cur += i;
 		}
+		cur += (n - 2*i);
+		ans = min(ans, cur);
 	}
 
-	// cout << last_character << endl;
-	// cout << s << endl;
-
-	if (last_character != 25) s = "-1";
-
-	cout << s << endl;
+	cout << ans << endl;
 
 	return 0;
 }

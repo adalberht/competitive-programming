@@ -75,6 +75,62 @@ struct SingleHash {
 		}
 };
 
+struct DoubleHash {
+    vector<ll> suf1, suf2, b1, b2;
+    ll base1, mod1, base2, mod2;
+    
+		DoubleHash() {
+		}
+
+    DoubleHash(string s, ll _base1 = 97266353LL, ll _mod1 = 972663749LL, ll _base2 = 97336357LL, ll _mod2 = 1000000007LL) {
+        base1 = _base1;
+        mod1 = _mod1;
+        base2 = _base2;
+        mod2 = _mod2;
+        int n = s.length();
+        suf1.assign(n + 1, 0);  // suf[n] = 0
+        b1.assign(n + 1, 0);
+        b1[0] = 1LL;
+        b1[1] = base1;
+        for (int i = n - 1; i >= 0; --i) {
+            suf1[i] = (s[i] + suf1[i + 1] * b1[1]) % mod1;
+        }
+        for (int i = 2; i <= n; ++i) {
+            b1[i] = (b1[i - 1] * b1[1]) % mod1;
+        }
+
+        suf2.assign(n + 1, 0);  // suf[n] = 0
+        b2.assign(n + 1, 0);
+        b2[0] = 1LL;
+        b2[1] = base2;
+        for (int i = n - 1; i >= 0; --i) {
+            suf2[i] = (s[i] + suf2[i + 1] * b2[1]) % mod2;
+        }
+        for (int i = 2; i <= n; ++i) {
+            b2[i] = (b2[i - 1] * b2[1]) % mod2;
+        }
+    }
+
+    pair<ll, ll> substr(int l, int r) const { // [l, r]
+        ll v1 = suf1[l] - suf1[r + 1] * b1[r - l + 1];
+        v1 %= mod1;
+        v1 += mod1;
+        v1 %= mod1;
+
+        ll v2 = suf2[l] - suf2[r + 1] * b2[r - l + 1];
+        v2 %= mod2;
+        v2 += mod2;
+        v2 %= mod2;
+
+        return {v1, v2};
+    }
+
+		pair<ll, ll> substr(ii val) {
+			return substr(val.fi, val.se);
+		}
+
+};
+
 SingleHash hash1;
 SingleHash hash2;
 SingleHash hash3;

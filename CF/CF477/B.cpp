@@ -2,12 +2,9 @@
 
 using namespace std;
 
-void FAST_IO() {
-	ios_base::sync_with_stdio(false);
-	cin.tie(0);
-	cout.tie(0);
-}
-
+#define FAST_IO ios_base::sync_with_stdio(false);\
+				cin.tie(0);\
+				cout.tie(0)
 #define REP(_i, _a) for(int _i = 0; _i < (int)_a; ++_i)
 #define FOR(_i, _a, _b) for(int _i = (int)_a; _i <= (int)_b; ++_i)
 #define FORD(_i, _a, _b) for(int _i = (int)_a; _i >= (int)_b; --_i)
@@ -48,16 +45,43 @@ const double PI = acos(-1.0);
 const int MOD = 1e9 + 7;
 const int INF = 2e9;
 
-void read() {
+int n, A, B;
+vi s;
+ll S = 0LL;
 
+void test() {
+
+}
+
+void read() {
+	cin >> n >> A >> B;
+	s.resize(n);
+	REP(i, n) {
+		cin >> s[i];
+		S += s[i];
+	}
 }
 
 void solve() {
-	
+	sort(s.begin() + 1, s.end());
+	int ans = 0;
+	FORD(i, n - 1, 0) {
+		if (S == 0LL) {
+			cout << ans << endl;
+		} else if (s[0] * A / S >= B) {
+			cout << ans << endl;
+			return;
+		} else {
+			++ans;
+			S -= s[i];
+		}
+	}
 }
 
 int main() {
-	FAST_IO();
+	FAST_IO;
+	
+	test();
 
 	int TC = 1;
 	// cin >> TC;

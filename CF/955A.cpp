@@ -28,6 +28,12 @@ void FAST_IO() {
 						 stringstream _ss(_s); istream_iterator<string> _it(_ss); \
 						 err(_it, args); }
 
+void err(istream_iterator<string> it) { cerr << endl; }
+template<typename T, typename... Args>
+void err(istream_iterator<string> it, T a, Args... args) {
+	cerr << *it << ": " << a << " ";
+	err(++it, args...);
+}
 
 typedef long long ll;
 typedef pair<int, int> ii;
@@ -44,33 +50,45 @@ const int INF = 2e9;
 
 const int MAX_N = 1e3 + 5;
 
-string s;
+int hh, mm;
+int H, D, C, N;
+
+bool isAtDiscountTime(int hh, int mm) {
+	return (hh*60+mm) >= 20*60 && (hh*60+mm) <= 23*60+59;
+}
+
+int getDifferenceToDiscountTime(int hh, int mm) {
+	return 20*60 - (hh*60 + mm);
+}
+
+double queryPrice(int H, int N, int C, bool isInDiscountTime) {
+	double cost = (double)C;
+	if (isInDiscountTime) cost *= 0.8;
+	return ceil((double)H/N)*cost;
+}
 
 int main() {
-	FAST_IO();
 	
-	cin >> s;
-	int len = s.length();
-	int first_a_occurence = s.find("a");
-
-	if (first_a_occurence == -1) {
-		cout << -1 << endl;
+	cin >> hh >> mm;
+	cin >> H >> D >> C >> N;
+	cout << fixed << setprecision(4);
+	if (isAtDiscountTime(hh, mm)) {
+		cout << queryPrice(H, N, C, true) << endl;
 		return 0;
 	}
 
-	int last_character = 0;
-	FOR(i, first_a_occurence+1, len-1) {
-		if (last_character < 25 && s[i] <= 'a' + last_character + 1) {
-			s[i] = (char)('a' + ++last_character);
-		}
-	}
+	DEBUG(getDifferenceToDiscountTime(hh, mm));
 
-	// cout << last_character << endl;
-	// cout << s << endl;
+	double waitForDiscountPrice = queryPrice(
+		getDifferenceToDiscountTime(hh, mm) * D + H,
+		N,
+		C,
+		true
+	);
 
-	if (last_character != 25) s = "-1";
+	double buyNow = queryPrice(H, N, C, false);
 
-	cout << s << endl;
+	cout << min(waitForDiscountPrice, buyNow) << endl;
 
 	return 0;
 }

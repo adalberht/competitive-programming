@@ -2,12 +2,9 @@
 
 using namespace std;
 
-void FAST_IO() {
-	ios_base::sync_with_stdio(false);
-	cin.tie(0);
-	cout.tie(0);
-}
-
+#define FAST_IO ios_base::sync_with_stdio(false);\
+				cin.tie(0);\
+				cout.tie(0)
 #define REP(_i, _a) for(int _i = 0; _i < (int)_a; ++_i)
 #define FOR(_i, _a, _b) for(int _i = (int)_a; _i <= (int)_b; ++_i)
 #define FORD(_i, _a, _b) for(int _i = (int)_a; _i >= (int)_b; --_i)
@@ -48,7 +45,33 @@ const double PI = acos(-1.0);
 const int MOD = 1e9 + 7;
 const int INF = 2e9;
 
+const int MAX_N = 2500;
+
+int N;
+string words[MAX_N + 5];
+
+void test() {
+
+}
+
+vector<string> parse_line(int width) {
+	vector<string> lines;
+	string cur = "";
+	for (int i = 0; i < N; ++i) {
+		if (cur.length() + words[i].length() + 1 <= width) {
+			cur = cur + " ";
+		} else {
+			lines.push_back(cur);
+			cur = "";
+		}
+	}
+}
+
 void read() {
+	cin >> N;
+	REP(i, N) {
+		cin >> words[i];
+	}
 
 }
 
@@ -57,7 +80,9 @@ void solve() {
 }
 
 int main() {
-	FAST_IO();
+	FAST_IO;
+	
+	test();
 
 	int TC = 1;
 	// cin >> TC;
