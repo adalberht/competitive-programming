@@ -35,7 +35,6 @@ void err(istream_iterator<string> it, T a, Args... args) {
 	err(++it, args...);
 }
 
-typedef unsigned long long ull;
 typedef long long ll;
 typedef pair<int, int> ii;
 typedef pair<int, int> pii;
@@ -45,28 +44,40 @@ typedef vector<int> vi;
 typedef vector<vi> vvi;
 typedef vector<ii> vii;
 
-string format(const string& s, ...) {
-    va_list args;
-    va_start (args, s);
-    size_t len = vsnprintf(NULL, 0, s.c_str(), args);
-    va_end (args);
-    std::vector<char> vec(len + 1);
-    va_start (args, s);
-    vsnprintf(&vec[0], len + 1, s.c_str(), args);
-    va_end (args);
-    return &vec[0];
-}
-
 const double PI = acos(-1.0);
 const int MOD = 1e9 + 7;
 const int INF = 2e9;
 
-void read() {
+int n;
+vi arr;
+bool is_last[55];
+bool is_exist[1005];
 
+void read() {
+	cin >> n;
+	arr.resize(n);
+	REP(i, n) {
+		cin >> arr[i];
+	}
 }
 
 void solve() {
-	
+	vi ans;
+	REP(i, n) {
+		bool flag = true;
+		FOR(j, i+1, n) {
+			if (arr[i] == arr[j]) {
+				flag = false;
+			}
+		}
+		if (flag) ans.pb(arr[i]);
+	}
+	cout << ans.size() << endl;
+	REP(i, ans.size()) {
+		if (i > 0) cout << " ";
+		cout << ans[i];
+	}
+	cout << endl;
 }
 
 int main() {

@@ -1,3 +1,17 @@
+/*
+	Albertus Angga Raharja
+	1606918401
+
+	Problem H - Mashmok and Numbers
+
+	Tags: Greedy and Number Theory
+
+	Observation:
+	- gcd(i, i+1) = 1 for all i >= 1
+	- gcd(i, 2*i) = i
+
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -61,12 +75,38 @@ const double PI = acos(-1.0);
 const int MOD = 1e9 + 7;
 const int INF = 2e9;
 
-void read() {
+int n, k;
 
+void read() {
+	cin >> n >> k;
 }
 
 void solve() {
-	
+	if (n == 1 && k == 0) {
+		cout << 1 << endl;
+		return;
+	}
+	if (n == 1 || k < n / 2) {
+		cout << -1 << endl;
+		return;
+	}
+	int x = k - (n - 2) / 2;
+	set<int> s = {x, 2 * x};
+	cout << format("%d %d", x, 2 * x);
+	int start = 1;
+	REP(i, (n - 2) / 2) {
+		while (s.count(start) || s.count(start+1)) ++start;
+		cout << format(" %d %d", start, start+1);
+		s.insert(start);
+		s.insert(start+1);
+		start += 2;
+	}
+	if (n % 2 == 1) {
+		while (s.count(start)) ++start;
+		cout << format(" %d", start) << endl;
+	} else {
+		cout << endl;
+	}
 }
 
 int main() {

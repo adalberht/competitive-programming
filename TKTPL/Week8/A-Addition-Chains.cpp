@@ -1,3 +1,12 @@
+/*
+Albertus Angga Raharja (adalberht)
+1606918401
+
+Problem A - Addition Chains
+Tags: Iterative Deepening + Greedy
+
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -35,7 +44,6 @@ void err(istream_iterator<string> it, T a, Args... args) {
 	err(++it, args...);
 }
 
-typedef unsigned long long ull;
 typedef long long ll;
 typedef pair<int, int> ii;
 typedef pair<int, int> pii;
@@ -45,37 +53,57 @@ typedef vector<int> vi;
 typedef vector<vi> vvi;
 typedef vector<ii> vii;
 
-string format(const string& s, ...) {
-    va_list args;
-    va_start (args, s);
-    size_t len = vsnprintf(NULL, 0, s.c_str(), args);
-    va_end (args);
-    std::vector<char> vec(len + 1);
-    va_start (args, s);
-    vsnprintf(&vec[0], len + 1, s.c_str(), args);
-    va_end (args);
-    return &vec[0];
-}
-
 const double PI = acos(-1.0);
 const int MOD = 1e9 + 7;
 const int INF = 2e9;
 
-void read() {
+const int MAX_N = 1e5;
 
+int N;
+vi ans(105);
+int depth;
+
+bool dfs(int x) {
+	if (x == depth) {
+		return (ans[x] == N);
+	}
+	FOR(i, 0, x) {
+		if (ans[x] + ans[i] <= N) {
+			int sum = ans[x] + ans[i];
+			FOR(k, x + 2, depth) sum *= 2;
+
+			if (sum < N) continue;
+
+			ans[x + 1] = ans[x] + ans[i];
+			if (dfs(x+1)) return true;
+		}
+	}
+	return false;
 }
 
 void solve() {
+	ans.clear();
+	ans[0] = 1;
+
+	int sum = 1;  	
+	depth = 0;
+	while(sum < N) {  
+			sum *= 2;  
+			depth++;  
+	}  
+
+	while(!dfs(0)) ++depth;
 	
+	cout << ans[0];
+	FOR(i, 1, depth) cout << " " << ans[i];
+	cout << endl;
+
 }
 
 int main() {
 	FAST_IO();
 
-	int TC = 1;
-	// cin >> TC;
-	FOR(tc, 1, TC) {
-		read();
+	while (cin >> N && N != 0) {
 		solve();
 	}
 

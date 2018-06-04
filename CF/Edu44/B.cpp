@@ -61,12 +61,32 @@ const double PI = acos(-1.0);
 const int MOD = 1e9 + 7;
 const int INF = 2e9;
 
-void read() {
+int n, m;
+char mat[2005][2005];
+int total[2005];
 
+void read() {
+	cin >> n >> m;
+	REP(i, n) {
+		REP(j, m) {
+			cin >> mat[i][j];
+			total[j] += mat[i][j] == '0' ? 0 : 1;
+		}
+	}
 }
 
 void solve() {
-	
+	REP(i, n) {
+		int cur = 0;
+		REP(j, m) {
+			if (total[j] - (mat[i][j] == '0' ? 0 : 1) > 0) ++cur;
+		}
+		if (cur == m) {
+			cout << "YES\n";
+			return;
+		}
+	}
+	cout << "NO\n";
 }
 
 int main() {

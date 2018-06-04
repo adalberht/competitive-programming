@@ -35,7 +35,6 @@ void err(istream_iterator<string> it, T a, Args... args) {
 	err(++it, args...);
 }
 
-typedef unsigned long long ull;
 typedef long long ll;
 typedef pair<int, int> ii;
 typedef pair<int, int> pii;
@@ -45,28 +44,37 @@ typedef vector<int> vi;
 typedef vector<vi> vvi;
 typedef vector<ii> vii;
 
-string format(const string& s, ...) {
-    va_list args;
-    va_start (args, s);
-    size_t len = vsnprintf(NULL, 0, s.c_str(), args);
-    va_end (args);
-    std::vector<char> vec(len + 1);
-    va_start (args, s);
-    vsnprintf(&vec[0], len + 1, s.c_str(), args);
-    va_end (args);
-    return &vec[0];
-}
-
 const double PI = acos(-1.0);
 const int MOD = 1e9 + 7;
 const int INF = 2e9;
 
-void read() {
+const int MAX_N = 2e5 + 5;
 
+int n, m;
+vector<ll> prefix_sum;
+
+void read() {
+	cin >> n >> m;
+	ll baca;
+	REP(i, n) {
+		cin >> baca;
+		if (prefix_sum.size() > 0) prefix_sum.pb(prefix_sum[prefix_sum.size() - 1] + baca);
+		else prefix_sum.pb(baca);
+	}
 }
 
 void solve() {
-	
+	ll b;
+	REP(i, m) {
+		cin >> b;
+		auto it = lower_bound(ALL(prefix_sum), b);
+		cout << it - prefix_sum.begin() + 1 << " ";
+		if (it != prefix_sum.begin()) {
+			cout << b - *(--it) << endl;
+		} else {
+			cout << b << endl;
+		}
+	}
 }
 
 int main() {

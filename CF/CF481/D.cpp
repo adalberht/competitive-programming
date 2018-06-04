@@ -35,7 +35,6 @@ void err(istream_iterator<string> it, T a, Args... args) {
 	err(++it, args...);
 }
 
-typedef unsigned long long ull;
 typedef long long ll;
 typedef pair<int, int> ii;
 typedef pair<int, int> pii;
@@ -45,28 +44,73 @@ typedef vector<int> vi;
 typedef vector<vi> vvi;
 typedef vector<ii> vii;
 
-string format(const string& s, ...) {
-    va_list args;
-    va_start (args, s);
-    size_t len = vsnprintf(NULL, 0, s.c_str(), args);
-    va_end (args);
-    std::vector<char> vec(len + 1);
-    va_start (args, s);
-    vsnprintf(&vec[0], len + 1, s.c_str(), args);
-    va_end (args);
-    return &vec[0];
-}
-
 const double PI = acos(-1.0);
 const int MOD = 1e9 + 7;
 const int INF = 2e9;
 
-void read() {
+const int MAX_N = 1e5;
 
+int n;
+int arr[MAX_N];
+int cop[MAX_N];
+
+void read() {
+	cin >> n;
+	REP(i, n) {
+		cin >> arr[i];
+		cop[i] = arr[i];
+	}
 }
 
 void solve() {
-	
+	if (n <= 2) { cout << 0 << endl; return; }
+	vector<ii> candidates;
+	int i = 0;
+		candidates.pb({arr[i+1],arr[i]});
+		candidates.pb({arr[i+1],arr[i]+1})	;
+		candidates.pb({arr[i+1],arr[i]-1});
+
+		candidates.pb({arr[i+1]+1,arr[i]});
+		candidates.pb({arr[i+1]+1,arr[i]+1});
+		candidates.pb({arr[i+1]+1,arr[i]-1});
+
+		candidates.pb({arr[i+1]-1,arr[i]});
+		candidates.pb({arr[i+1]-1,arr[i]+1});
+		candidates.pb({arr[i+1]-1,arr[i]-1});
+
+	int ans = 2e9;
+	int cur = 0;
+	for (auto candidate: candidates) {
+		cur = 0;
+		REP(i, n) {
+			cop[i] = arr[i];
+		}
+		cop[0] = candidate.se;
+		cop[1] = candidate.fi;
+		cur += (cop[0] != arr[0]) + (cop[1] != arr[1]);
+
+		int difference = candidate.fi - candidate.se;
+		bool valid = true;
+		FOR(i, 2, n-1) {
+			if (cop[i] - cop[i-1] == difference) continue;
+			else {
+				++cur;
+				if (cop[i]+1 - cop[i-1] == difference) {
+					++cop[i];
+				} else if (cop[i]-1 - cop[i-1] == difference) {
+					--cop[i];
+				} else {
+					valid = false;
+					break;
+				}
+			}
+		}
+		if (valid) {
+			ans = min(ans, cur);
+		}
+	}
+	if (ans == 2e9 || ans > n) cout << -1 << endl;
+	else cout << ans << endl;
 }
 
 int main() {

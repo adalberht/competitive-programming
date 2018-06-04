@@ -1,3 +1,12 @@
+/**
+ * Albertus Angga Raharja
+ * 1606918401
+ * 
+ * E - Godel's Dream
+ * Tags: Greedy
+ * 
+ */
+
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -61,22 +70,36 @@ const double PI = acos(-1.0);
 const int MOD = 1e9 + 7;
 const int INF = 2e9;
 
-void read() {
-
-}
-
-void solve() {
-	
+int solve(string& s) {
+	int ret = 0, idx = 1;
+	REP(i, s.length()) {
+		if (s[i] == '?') {
+			s[i] = '0';
+		}
+		if (s[i] == '0') {
+			if (idx < 1) {
+				idx++;
+			}
+		} else if (idx > 0) {
+			idx = -1;
+		} else {
+			idx--;
+		}
+		if (idx > 0) {
+			ret++;
+		}
+	}
+	if (idx < 1) ret = 0;
+	return ret;
 }
 
 int main() {
 	FAST_IO();
 
-	int TC = 1;
-	// cin >> TC;
-	FOR(tc, 1, TC) {
-		read();
-		solve();
+	string s;
+
+	while (cin >> s) {
+		cout << format("%d\n", solve(s));
 	}
 
 	return 0;

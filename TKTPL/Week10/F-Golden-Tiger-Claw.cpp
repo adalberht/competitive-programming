@@ -1,3 +1,10 @@
+/*
+	Albertus Angga Raharja - 1606918401
+
+	F - Golden Tiger Claw
+	Tags: Hungarian
+
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -11,7 +18,7 @@ void FAST_IO() {
 #define REP(_i, _a) for(int _i = 0; _i < (int)_a; ++_i)
 #define FOR(_i, _a, _b) for(int _i = (int)_a; _i <= (int)_b; ++_i)
 #define FORD(_i, _a, _b) for(int _i = (int)_a; _i >= (int)_b; --_i)
-#define RESET(_a, _value) fill_n(_a,sizeof(_a)/sizeof(_a[0]),_v)
+#define RESET(_a, _value) fill_n(_a,sizeof(_a)/sizeof(_a[0]),_value)
 #define ALL(_a) _a.begin(), _a.end()
 #define SIZE(_a) _a.size()
 #define pb push_back
@@ -59,22 +66,82 @@ string format(const string& s, ...) {
 
 const double PI = acos(-1.0);
 const int MOD = 1e9 + 7;
-const int INF = 2e9;
+const int INF = 1e8;
+
+const int MAX_N = 505;
+
+int W[MAX_N][MAX_N], N;
+int my[MAX_N]; // match arr
+int lx[MAX_N], ly[MAX_N]; // label arr
+int x[MAX_N], y[MAX_N]; // used arr
+
+int hungary(int nd) {
+    x[nd] = 1;
+    FOR (i, 1, N) {
+        if (y[i] == 0 && W[nd][i] == lx[nd]+ly[i]) {
+            y[i] = 1;
+            if (my[i] == 0 || hungary(my[i])) {
+                my[i] = nd;
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+int n, m, k;
 
 void read() {
-
+  N = n;
+	FOR (i, 1, n)
+    FOR (j, 1, n)
+      cin >> W[i][j];
 }
 
 void solve() {
-	
+	int d;
+
+  RESET(my, 0);
+	RESET(lx, 0);
+  RESET(ly, 0);
+  
+	FOR (i, 1, N)
+		FOR(j, 1, N)
+			lx[i] = lx[i] > W[i][j] ? lx[i] : W[i][j];
+
+	FOR (i, 1, N) {
+			while (1) {
+					memset(x, 0, sizeof(x));
+					memset(y, 0, sizeof(y));
+					if(hungary(i))  break;
+					d = INF;
+					FOR(j, 1, N) {
+						if(x[j]) {
+								FOR(k, 1, N)
+									if(!y[k])
+										d = d < lx[j]+ly[k]-W[j][k] ?
+											d : lx[j]+ly[k]-W[j][k];
+						}
+					}
+					if(d == INF)  break;
+					FOR(j, 1, N) {
+							if(x[j]) lx[j] -= d;
+							if(y[j]) ly[j] += d;
+					}
+			}
+	}
+  int res = 0;
+
+	FOR (i, 1, n) cout << format("%d%c", lx[i], (i == n ? '\n' : ' ')), res += lx[i];
+  FOR (i, 1, n) cout << format("%d%c", ly[i], (i == n ? '\n' : ' ')), res += ly[i];
+  cout << res << endl;
+
 }
 
 int main() {
 	FAST_IO();
 
-	int TC = 1;
-	// cin >> TC;
-	FOR(tc, 1, TC) {
+	while (cin >> n && n) {
 		read();
 		solve();
 	}

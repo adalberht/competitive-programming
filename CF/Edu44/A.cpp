@@ -61,12 +61,27 @@ const double PI = acos(-1.0);
 const int MOD = 1e9 + 7;
 const int INF = 2e9;
 
-void read() {
+int n;
+vector<int> arr1;
 
+void read() {
+	cin >> n;
+	arr1.resize(n/2);
+	REP(i, n/2) {
+		cin >> arr1[i];
+	}
+	sort(ALL(arr1));
 }
 
 void solve() {
-	
+	int ganjil = 0;
+	int genap = 0;
+	for (int i = 0; i < n / 2; ++i) {
+		// cout << 2*i+1 << " " << 2*i+2 << " " << arr1[i] << endl;
+		ganjil += max(2*i+1, arr1[i]) - min(2*i+1, arr1[i]);
+		genap += max(2*i+2, arr1[i]) - min(2*i+2, arr1[i]);
+	}
+	cout << min(ganjil, genap) << endl;
 }
 
 int main() {

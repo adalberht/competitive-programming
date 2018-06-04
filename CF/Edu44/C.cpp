@@ -35,7 +35,7 @@ void err(istream_iterator<string> it, T a, Args... args) {
 	err(++it, args...);
 }
 
-typedef unsigned long long ull;
+typedef long long ull;
 typedef long long ll;
 typedef pair<int, int> ii;
 typedef pair<int, int> pii;
@@ -61,12 +61,55 @@ const double PI = acos(-1.0);
 const int MOD = 1e9 + 7;
 const int INF = 2e9;
 
-void read() {
+ll n, k, l;
+ll N;
+vector<ll> arr;
+vector<set<int>> match;
 
+void read() {
+	cin >> n >> k >> l;
+	N = n * k;
+	arr.resize(n*k);
+	for (ll i = 0; i < n*k; ++i) {
+		cin >> arr[i];
+	}
+	sort(ALL(arr));
 }
 
+vector<bool> used;
+
 void solve() {
-	
+	int r = upper_bound(ALL(arr), arr[0] + l) - arr.begin();
+	--r;
+	if (r+1 < n) {
+		cout << 0 << endl;
+		return;
+	} else {
+		ll sum = 0LL;
+		if (n == 1) sum += arr[0];
+		else if (k == 1) {
+			REP(i, N) {
+				sum += arr[i];
+			}
+		} else {
+			int up = (N-r-1) / (k-1);
+			int sisa = (N-r-1) % (k-1);
+			int i;
+			for (i = r; i > r - up; --i) {
+				sum += arr[i];
+			}
+			int cnt = 1;
+			while (sisa + cnt < k) {
+				++cnt;
+				--i;
+			}
+			sum += arr[i];
+			for (int j = 0; j < i; j += k) {
+				sum += arr[j];
+			}
+		}
+		cout << sum << endl;
+	}
 }
 
 int main() {

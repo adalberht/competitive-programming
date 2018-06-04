@@ -1,3 +1,12 @@
+/*
+Albertus Angga Raharja (adalberht)
+1606918401
+
+Problem D - Remainders Game
+Tags: Number Theory, CRT
+
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -35,7 +44,6 @@ void err(istream_iterator<string> it, T a, Args... args) {
 	err(++it, args...);
 }
 
-typedef unsigned long long ull;
 typedef long long ll;
 typedef pair<int, int> ii;
 typedef pair<int, int> pii;
@@ -45,39 +53,29 @@ typedef vector<int> vi;
 typedef vector<vi> vvi;
 typedef vector<ii> vii;
 
-string format(const string& s, ...) {
-    va_list args;
-    va_start (args, s);
-    size_t len = vsnprintf(NULL, 0, s.c_str(), args);
-    va_end (args);
-    std::vector<char> vec(len + 1);
-    va_start (args, s);
-    vsnprintf(&vec[0], len + 1, s.c_str(), args);
-    va_end (args);
-    return &vec[0];
-}
-
 const double PI = acos(-1.0);
 const int MOD = 1e9 + 7;
 const int INF = 2e9;
 
-void read() {
+ll c, n, k, x;
 
-}
 
-void solve() {
-	
+ll lcm(ll a, ll b) {
+	return (a * b) / __gcd(a, b);
 }
 
 int main() {
 	FAST_IO();
 
-	int TC = 1;
-	// cin >> TC;
-	FOR(tc, 1, TC) {
-		read();
-		solve();
+	cin >> n >> k;
+	x = 1LL;
+	REP(i, n) {
+		cin >> c;
+		x = lcm(x, c);
+		x = __gcd(x, k);
 	}
+	if (x == k) cout << "Yes\n";
+	else cout << "No\n";
 
 	return 0;
 }

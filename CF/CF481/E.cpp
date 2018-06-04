@@ -35,7 +35,6 @@ void err(istream_iterator<string> it, T a, Args... args) {
 	err(++it, args...);
 }
 
-typedef unsigned long long ull;
 typedef long long ll;
 typedef pair<int, int> ii;
 typedef pair<int, int> pii;
@@ -45,28 +44,39 @@ typedef vector<int> vi;
 typedef vector<vi> vvi;
 typedef vector<ii> vii;
 
-string format(const string& s, ...) {
-    va_list args;
-    va_start (args, s);
-    size_t len = vsnprintf(NULL, 0, s.c_str(), args);
-    va_end (args);
-    std::vector<char> vec(len + 1);
-    va_start (args, s);
-    vsnprintf(&vec[0], len + 1, s.c_str(), args);
-    va_end (args);
-    return &vec[0];
-}
-
 const double PI = acos(-1.0);
 const int MOD = 1e9 + 7;
 const int INF = 2e9;
 
-void read() {
+int n, w;
+int prefix_sum[1005];
 
+
+void read() {
+	cin >> n >> w;
+	int a;
+	prefix_sum[0] = 0;
+	FOR(i, 1, n) {
+		cin >> a;
+		prefix_sum[i] = prefix_sum[i-1] + a;
+	}
 }
 
 void solve() {
-	
+	int maksimum = prefix_sum[1];
+	int minimum = prefix_sum[1];
+	FOR(i, 1, n) {
+		maksimum = max(maksimum, prefix_sum[i]);
+		minimum = min(minimum, prefix_sum[i]);
+	}
+	maksimum = w - maksimum;
+	maksimum = min(maksimum, w);
+	minimum = -minimum;
+	minimum = max(minimum, 0);
+	// DEBUG(minimum);
+	// DEBUG(maksimum);
+	if (maksimum < minimum) cout << 0 << endl;
+	else cout << maksimum - minimum + 1 << endl;
 }
 
 int main() {

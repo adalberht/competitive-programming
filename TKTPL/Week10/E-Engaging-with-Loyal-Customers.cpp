@@ -1,3 +1,10 @@
+/*
+	Albertus Angga Raharja - 1606918401
+
+	E - Engaging with Loyal Customers
+	Tags: Classical Hungarian Problem
+
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -59,18 +66,92 @@ string format(const string& s, ...) {
 
 const double PI = acos(-1.0);
 const int MOD = 1e9 + 7;
-const int INF = 2e9;
+const int INF = 1e8;
+
+const int MAX_M = 1005;
+const int MAX_N = 1005;
+
+
+int W[MAX_N][MAX_N], N;
+int my[MAX_N]; // match arr
+int lx[MAX_N], ly[MAX_N]; // label arr
+int x[MAX_N], y[MAX_N]; // used arr
+
+int hungary(int nd) {
+    int i;
+    x[nd] = 1;
+    for(i = 1; i <= N; i++) {
+        if(y[i] == 0 && W[nd][i] == lx[nd]+ly[i]) {
+            y[i] = 1;
+            if(my[i] == 0 || hungary(my[i])) {
+                my[i] = nd;
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+int n, m, k;
 
 void read() {
-
+	scanf("%d %d %d", &n, &m, &k);
+	N = max(n, m);
+	int i, j, p;
+	REP(_i, k) {
+		scanf("%d %d %d", &i, &j, &p);
+		W[i][j] = p;
+	}
 }
 
 void solve() {
+	int d;
+		
+	FOR(i, 1, N)
+		FOR(j, 1, N)
+			lx[i] = lx[i] > W[i][j] ? lx[i] : W[i][j];
+
+	FOR(i, 1, N) {
+			while(1) {
+					memset(x, 0, sizeof(x));
+					memset(y, 0, sizeof(y));
+					if(hungary(i))  break;
+					d = INF;
+					FOR(j, 1, N) {
+						if(x[j]) {
+								FOR(k, 1, N)
+									if(!y[k])
+										d = d < lx[j]+ly[k]-W[j][k] ?
+											d : lx[j]+ly[k]-W[j][k];
+						}
+					}
+					if(d == INF)  break;
+					FOR(j, 1, N) {
+							if(x[j]) lx[j] -= d;
+							if(y[j]) ly[j] += d;
+					}
+			}
+	}
+	int res = 0, cnt = 0;
+	FOR(i, 1, N) {
+		if (my[i] && W[my[i]][i]) {
+			res += W[my[i]][i];
+			++cnt;
+		}
+	}
 	
+	printf("%d\n", res);
+	printf("%d\n", cnt);
+	FOR(i, 1, n) {
+		if (my[i] && W[my[i]][i]) {
+			printf("%d %d\n", my[i], i);
+		}
+	}
+
 }
 
 int main() {
-	FAST_IO();
+	// FAST_IO();
 
 	int TC = 1;
 	// cin >> TC;
